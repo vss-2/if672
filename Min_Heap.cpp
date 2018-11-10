@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int tempswap, auxswap, esq, dir, paizao, SUtroca, SUtemp, removeHP; int um = 1; 
+int tempswap, auxswap, esq, dir, paizao, SUtroca, SUtemp, removeHP, trocaHF, esqHF, dirHF, maiorHF; int um = 1; 
 
 struct Node {
     int dado; 
@@ -98,6 +98,29 @@ int HeapRemover (Heap *H){
         removeHP = H->array[0];
         H->array[0] = H->array[H->n->dado-1];
         H->n->dado--;
+    }
+}
+
+void Heapfy (Heap *H, int i, int n){
+    trocaHF = 1; esqHF = 0; dirHF = 0;
+    while (i < n / 2 && trocaHF){
+        trocaHF = 0;
+        esqHF = esqNo(H, i);
+        dirHF = dirNo(H, i);
+        if (dirHF >= 0){
+            maiorHF = H->array[esqHF] > H->array[dirHF]? esqHF : dirHF;
+            if(H->array[i] < H->array[maiorHF]){
+                HeapSwap(H, i, maiorHF);
+                i = maiorHF;
+                trocaHF = 1;
+            } else {
+                if(H->array[i] < H->array[esqHF]){
+                    swap(H, i, esqHF);
+                    i = esqHF;
+                    trocaHF = 1;
+                }
+            }
+        }
     }
 }
 
