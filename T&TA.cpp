@@ -4,8 +4,6 @@ using namespace std;
 
 double prioridade = 0;
 int N, M, mcount, X, Y, B, C, S, T;
-int Bs[101];
-int Cs[101];
 int percorrer;
 
 double W;
@@ -88,6 +86,15 @@ bool dijkstra(int S, int T){
 
 int main(){
 
+    /*
+        -------------- Proposito do Main ---------------
+        1. Ele recebe prioridade do cliente, quantidade de
+           vértices e arestas que irá receber em seguida
+        2. Logo após recebe ligações entre vértices,
+           com velocidade, custo e faz o cálculo do peso
+        3. Marca o caminho do par ordenado numa lista
+        ------------------------------------------------
+    */
     scanf("%d",&prioridade);
     scanf("%i",&N);
     scanf("%i",&M);
@@ -97,7 +104,7 @@ int main(){
     int Xs[M];
     int Ys[M];
     double Ws[M];
-    int ladj[M];
+    int ladj[M][M];
 
     // Cria array para X e Y, de tamanho N
     // após isso recebe entradas dos arrays
@@ -105,13 +112,14 @@ int main(){
     for (mcount = 0; mcount < N; mcount++){
         scanf("%i", &X[mmount]); // Origem
         scanf("%i", &Y[mmount]); // Destino
-        // Tenho que fazer par ordenado (X,Y) e (Y,X)
+
+        ladj[X][Y] = 1;  // Marco na lista de adjacencia
+        ladj[Y][X] = 1;  // Tenho que marcar (X,Y) e (Y,X)
+
         scanf("%i", &B); // Velocidade
         scanf("%i", &C); // Custo
         Ws[M] = (P*B + (1-P)*C)) / (B+C); // Peso
     }
-
-
 
     // Recebe origem e destino
 
