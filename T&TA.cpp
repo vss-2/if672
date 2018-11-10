@@ -34,9 +34,11 @@ filaPrioridade *inserir(filaPrioridade *pq, trupla valores){
         return pq;
     } else {
         percorrer = 0;
-        while (percorrer < pq->tamanho){
-            if (valores->peso > pq->no->prioridade){
-                
+        while (percorrer < pq->tamanho - 1){
+            if (valores->peso > pq->no->proximo->prioridade){
+                no temporario = new no();                       //Crio novo nó
+                temporario->proximo = pq->no->proximo;          //temporario aponta para o resto da fila
+                pq->no->proximo = temporario;                   //próximo aponta para o temporario
                 return pq;
             }
             percorrer++;
