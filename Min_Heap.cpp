@@ -9,10 +9,16 @@ struct Node {
     Node *esq; Node *dir;
 };
 
+struct Heap {
+    int array[50000]; Node n;
+};
+
 void Node *swap(int valor){
     tempswap = no->dado;
     no->dado = valor;
     valor = tempswap;
+    // A ideia é simples:
+    // faça a troca usando pivô
 }
 
 int Node tamanho(){
@@ -20,6 +26,10 @@ int Node tamanho(){
     if (this->left != NULL) r += this->left->tamanho();
     if (this->right != NULL) r += this->right->tamanho();
     return r;
+    // Para saber o tamanho:
+    // percorre recursivamente
+    // da esquerda para direita
+    // e retorne o tamanho da soma
 }
 
 void Node inserir(Node* no){
@@ -27,21 +37,24 @@ void Node inserir(Node* no){
     else if (this->dir == NULL) this->dir = no;
     else if (this->left->tamanho() > this->right->tamanho()) this->right->inserir(no);
     else this->esq->inserir(no);
+    // O da esquerda está vazio?
+    // O da direta está vazio?
+    // Se o ramo esquerdo for maior, bota na direita
+    // Senão, bota na esquerda
 }
 
-struct Heap {
-    int array[50000]; int n;
-};
 
 void HeapSwap (Heap *H, int a, int b){
     auxswap = H->array[a];
     H->array[a] = H->array[b];
     H->array[b] = auxswap;
+    // Entra a heap e os valores a serem trocados
+    // Use pivô e efetue a troca
 }
 
 int esqNo (Heap *H, int paizao){
     esq = (paizao*2) + 1;
-    if (esq <= H->n){
+    if (esq <= H->n->dado){
         return esq;
     } else {
         return -1;
@@ -50,7 +63,7 @@ int esqNo (Heap *H, int paizao){
 
 int dirNo (Heap *H, int paizao){
     dir = (paizao*2) + 2;
-    if (dir <= H->n){
+    if (dir <= H->n->dado){
         return dir;
     } else {
         return -1;
@@ -82,7 +95,6 @@ int HeapRemover (Heap *H){
         removeHP = H->array[0];
         H->array[0] = H->array[H->n-1];
         H->n--;
-        
     }
 }
 
