@@ -8,6 +8,8 @@ int Bs[101];
 int Cs[101];
 int percorrer;
 
+double W;
+
 int resposta = 0;
 
 struct no{
@@ -36,9 +38,9 @@ filaPrioridade *inserir(filaPrioridade *pq, trupla valores){
         percorrer = 0;
         while (percorrer < pq->tamanho - 1){
             if (valores->peso > pq->no->proximo->prioridade){
-                no temporario = new no();                       //Crio novo nó
-                temporario->proximo = pq->no->proximo;          //temporario aponta para o resto da fila
-                pq->no->proximo = temporario;                   //próximo aponta para o temporario
+                no temporario = new no();                       // Crio novo nó
+                temporario->proximo = pq->no->proximo;          // temporario aponta para o resto da fila
+                pq->no->proximo = temporario;                   // próximo aponta para o temporario
                 return pq;
             }
             percorrer++;
@@ -86,31 +88,32 @@ bool dijkstra(int S, int T){
 
 int main(){
 
-    std::ios
-
     scanf("%d",&prioridade);
     scanf("%i",&N);
     scanf("%i",&M);
     
-    //Pega prioridades, e entrada N e M
+    // Pega prioridades, e entrada N e M
 
     int Xs[M];
     int Ys[M];
+    double Ws[M];
     int ladj[M];
 
-    //Cria array para X e Y, de tamanho N
-    //após isso recebe entradas dos arrays
+    // Cria array para X e Y, de tamanho N
+    // após isso recebe entradas dos arrays
 
     for (mcount = 0; mcount < N; mcount++){
-        scanf("%i", &X[mmount]);
-        scanf("%i", &Y[mmount]);
-        scanf("%i", &B[mmount]);
-        scanf("%i", &C[mmount]);
+        scanf("%i", &X[mmount]); // Origem
+        scanf("%i", &Y[mmount]); // Destino
+        // Tenho que fazer par ordenado (X,Y) e (Y,X)
+        scanf("%i", &B); // Velocidade
+        scanf("%i", &C); // Custo
+        Ws[M] = (P*B + (1-P)*C)) / (B+C); // Peso
     }
 
-    double W = (P*B + (1-P)*C)) / (B+C);
 
-    //Recebe origem e destino
+
+    // Recebe origem e destino
 
     while(cin){
         scanf("%i", &S);
