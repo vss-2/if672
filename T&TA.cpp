@@ -6,6 +6,7 @@ double prioridade = 0;
 int N, M, mcount, X, Y, B, C, S, T;
 int Bs[101];
 int Cs[101];
+int percorrer;
 
 int resposta = 0;
 
@@ -15,27 +16,41 @@ struct no{
 };
 
 struct filaPrioridade {
-    no *frente;
+    no *inicio, *fim;
+    int tamanho;
 };
 
+struct trupla {
+    int indo, chegando, peso;
+};
 
-filaPrioridade *colocar(filaPrioridade *pq, int valor, int prioridade){
-    
-    return pq;
+filaPrioridade *inserir(filaPrioridade *pq, trupla valores){
+    no *auxiliar = new no();
+    auxiliar->valor = valores->peso;
+    auxiliar->proximo = NULL;
+    if(pq->inicio == NULL){
+        q->inicio = q->fim = aux;
+        pq->tamanho = pq->tamanho + 1;
+        return pq;
+    } else {
+        percorrer = 0;
+        while (percorrer < pq->tamanho){
+            if (valores->peso > pq->no->prioridade){
+                
+                return pq;
+            }
+            percorrer++;
+        }
+    }
 }
 
-
-filaPrioridade *estavazia(filaPrioridade *pq){
-    return
-}
-
-filaPrioridade *dotopo(filaPrioridade *pq){
-    return
-}
-
-filaPrioridade *popar(*filaPrioridade *pq){
-    return
-}
+/*
+    Qual é a ideia?
+    Inserir, temos dois casos, está vazio a fila ou não.
+    No primeiro caso, somente preencher.
+    No segundo caso, temos que percorrer a fila, até 
+    encontrar o caso que a prioridade é maior.
+*/
 
 bool dijkstra(int S, int T){
     filaPrioridade avisitar = new filaPrioridade();
