@@ -9,27 +9,35 @@ int Cs[101];
 
 int resposta = 0;
 
-struct filaPrioridade {
-
-    int colocar(){
-
-    }
-
-
-    bool estavazia(){
-
-    }
-
-    int dotopo(){
-
-    }
-
-    int popar(){
-
-    }
+struct no{
+    int prioridade, valor;
+    no *proximo;
 };
 
-int dijkstra(int S, int T){
+struct filaPrioridade {
+    no *frente;
+};
+
+
+filaPrioridade *colocar(filaPrioridade *pq, int valor, int prioridade){
+    
+    return pq;
+}
+
+
+filaPrioridade *estavazia(filaPrioridade *pq){
+    return
+}
+
+filaPrioridade *dotopo(filaPrioridade *pq){
+    return
+}
+
+filaPrioridade *popar(*filaPrioridade *pq){
+    return
+}
+
+bool dijkstra(int S, int T){
     filaPrioridade avisitar = new filaPrioridade();
     
     bool caminho = false;
@@ -56,10 +64,13 @@ int dijkstra(int S, int T){
             }
         }
     
-    return resposta;
+    return caminho;
 }
 
 int main(){
+
+    std::ios
+
     scanf("%d",&prioridade);
     scanf("%i",&N);
     scanf("%i",&M);
@@ -68,6 +79,7 @@ int main(){
 
     int Xs[M];
     int Ys[M];
+    int ladj[M];
 
     //Cria array para X e Y, de tamanho N
     //após isso recebe entradas dos arrays
@@ -79,10 +91,14 @@ int main(){
         scanf("%i", &C[mmount]);
     }
 
+    double W = (P*B + (1-P)*C)) / (B+C);
+
     //Recebe origem e destino
 
-    scanf("%i", &S);
-    scanf("%i", &T);
+    while(cin){
+        scanf("%i", &S);
+        scanf("%i", &T);
+    }
 
     return 0;
 }
