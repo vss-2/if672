@@ -82,19 +82,22 @@ void SiftUp (Heap *H, int a){
             troca = 1;
         }
     }
+    // Tenho que organizar enquanto o
+    // Heap na posição de a for maior que o pai
+    // Quando acabar, encerra o SiftUp
 }
 
 void HeapInserir (Heap *H, int valor){
-    H->array[H->n] = valor;
-    H->n++;
-    SiftUp(H, H->n-1);
+    H->array[H->n->dado] = valor;
+    H->n->dado++;
+    SiftUp(H, H->n->dado-1);
 }
 
 int HeapRemover (Heap *H){
-    if (H->n > -1){
+    if (H->n->dado > -1){
         removeHP = H->array[0];
-        H->array[0] = H->array[H->n-1];
-        H->n--;
+        H->array[0] = H->array[H->n->dado-1];
+        H->n->dado--;
     }
 }
 
