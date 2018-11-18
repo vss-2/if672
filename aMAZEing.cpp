@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 struct Subconjunto {
-    int pai, rank, valor;
+  int pai, rank, valor;
 };
 
 // Funcao para encontrar um elemento i (usando tecnica de compressao)
@@ -35,27 +35,26 @@ int main(){
     int K, N, M, Q, A, B; 
     // Numero de casos, tamanho do lab, paredes internas rem, pares consultadas
     int W[M];
-    int buscado1, buscado2;
     scanf("%i",&K);
     int a, b, c;
     for (a = 0; a < K; a++) {
         scanf("%i %i %i", &N, &M, &Q);
-        Subconjunto Paredes[2*(N^2-N)-1]; // Todas as paredes possíveis
-        for (b = 0; b < 2*(N^2-N)-1 -1 ; b++){
-            unir(Paredes[b], b, b+1); //Unir todas as paredes possíveis
+        Subconjunto Paredes[2*(N^2-N)-1]; //Todas as paredes possíveis
+        for (int tcu = 0; tcu < 2*(N^2-N)-1; tcu++){
+          Paredes[tcu].pai = 0;
         }
         for (b = 0; b < M; b++){
             scanf("%i", &W[M]);
+            Paredes[b].pai = -1;
         }
         for (c = 0; c < Q; c++){
             scanf("%i %i", &A, &B);
-            int buscado1 = (Paredes[A], A);
-            int buscado2 = (Paredes[B], B);
             if (buscado1 != buscado2){
-                printf("%i.%i 0\n", a, c); // Caso os pais não sejam os mesmos
+                printf("%i.%i 0\n", a, c);
             } else {
-                printf("%i.%i 1\n", a, c); // Caso os pais sejam iguais
+                printf("%i.%i 1\n", a, c);
             }
         }
+    printf("\n");
     }
 }
