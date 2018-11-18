@@ -5,36 +5,37 @@
 using namespace std;
 
 struct Subconjunto {
-  int pai, valor;
+    int pai, rank;
 };
 
 // Funcao para encontrar um elemento i (usando tecnica de compressao)
-int buscar(struct Subconjunto buscado[], int i){
-    if (buscado->pai != i && buscado->pai != -2){
-        buscado->pai = buscar(buscado,buscado[i].pai);
+int temp;
+int buscar(Subconjunto *caminho[], int procurado){
+    if (caminho[procurado].pai != procurado){
+        caminho[procurado].pai = buscar(caminho, caminho[procurado].pai);
     }
-    return buscado->pai;
+    return caminho->pai;
 }
 
 // Funcao que une dois conjuntos de X e Y
-void unir(struct Subconjunto subconjuntos[], int x, int y){
-    int raizX = buscar(subconjuntos, x);
-    int raizY = buscar(subconjuntos, y);
+void unir(Subconjunto *caminho[], int x, int y){
+    int raizX = buscar(caminho, x);
+    int raizY = buscar(caminho, y);
 
     // Une arvores de meor rank sob a arvore de maior rank (uniao por rank)
 
-    if (subconjuntos[raizX].rank < subconjuntos[raizY].rank){
-        subconjuntos[raizX].pai = raizY;
-    } else if (subconjuntos[raizX].rank > subconjuntos[raizY].rank){
-        subconjuntos[raizY].pai = raizX;
-    } else { 
+    if (caminho[raizX].rank < caminho[raizY].rank){
+        caminho[raizX].pai = raizY;
+    } else if (caminho[raizX].rank > caminho[raizY].rank){
+        caminho[raizY].pai = raizX;
+    } else {
         // Se o rank for igual, entao faca uma ser raiz e incremente +1 a outra
-        subconjuntos[raizY].pai = raizX;
-        subconjuntos[raizX].rank++;
+        caminho[y].pai = raizX;
+        caminho[raizX].rank++;
     }
 }
 
-int K, N, M, Q, A, B; 
+int K, N, M, Q, A, B;
 int W, valor1, valor2;
 int a, b, c;
 int sobrescrever, celulahorizontal, celulavertical, buscado1, buscado2, contador;
@@ -48,27 +49,28 @@ int main(){
         // M Quantidade de paredes removidas
         // Q Quantidade de pares testados
         int Gama = (2*(N-1)) + 1;
-        Subconjunto caminho[N];
+        Subconjunto caminho[N*N];
         for (sobrescrever = 0; sobrescrever < N*N; sobrescrever++){
             caminho[sobrescrever].pai = sobrescrever;
             // Cada quadradinho é pai de si mesmo, e começa sendo assim
         }
         for (b = 0; b < M; b++){
             // Recebo paredes a serem removidas, tenho que unir o que elas separavam
-            scanf("%i", &W); contador = 0; valor1 = 0; valor2 = 0;
+            scanf("%i", &W); contador = 1; valor1 = 0; valor2 = 0;
             if (W % Gama > N - 2){ // Se der maior é pq é uma célula horizontal --W--
-              for (celulahorizontal = W % Gama; celulahorizontal == W; celulahorizontal += N){
-                contador++;
-              }
-              valor1 = N*contador; valor2 = valor1 + N;
+                for (celulahorizontal = W % Gama; celulahorizontal == W; celulahorizontal += N){
+                    contador++;
+                }
+                valor1 = N*contador; valor2 = valor1 + N;
             } else {
-              // O valor é uma célula vertical
-              for (celulavertical = W % Gama; celulavertical == W; celulavertical += Gama){
-                contador++;
-              }
-              valor1 = (Gama * contador) - (2 * contador); valor2 = valor1 + 1;
+                // O valor é uma célula vertical
+                for (celulavertical = W % Gama; celulavertical != W; celulavertical += Gama){
+                    contador++;
+                }
+                valor1 = W - ((contador - 1) *(N - 1)); valor2 = valor1 + 1;
             }
-            cout << "Tenho que unir: " << valor1 << " " << valor2 << endl;
+            unir(caminho, valor1, valor2);
+            //cout << "Tenho que unir: " << valor1 << " " << valor2 << endl;
             //unir(caminho, W);
         }
         for (c = 0; c < Q; c++){
@@ -82,6 +84,6 @@ int main(){
                 printf("%i.%i 1\n", a, c);
             }
         }
-    printf("\n");
+        printf("\n");
     }
 }
