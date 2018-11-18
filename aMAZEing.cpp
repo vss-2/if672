@@ -45,10 +45,12 @@ int main(){
         }
         for (b = 0; b < M; b++){
             scanf("%i", &W[M]);
-            Paredes[b].pai = -1;
+            Paredes[W[M]].pai = -2;
         }
         for (c = 0; c < Q; c++){
             scanf("%i %i", &A, &B);
+            int buscado1 = buscar(Paredes, A);
+            int buscado2 = buscar(Paredes, B);
             if (buscado1 != buscado2){
                 printf("%i.%i 0\n", a, c);
             } else {
