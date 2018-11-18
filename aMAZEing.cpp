@@ -10,7 +10,7 @@ struct Subconjunto {
 
 // Funcao para encontrar um elemento i (usando tecnica de compressao)
 int temp;
-int buscar(Subconjunto *caminho[], int procurado){
+int buscar(Subconjunto caminho[], int procurado){
     if (caminho[procurado].pai != procurado){
         caminho[procurado].pai = buscar(caminho, caminho[procurado].pai);
     }
@@ -18,7 +18,7 @@ int buscar(Subconjunto *caminho[], int procurado){
 }
 
 // Funcao que une dois conjuntos de X e Y
-void unir(Subconjunto *caminho[], int x, int y){
+void unir(Subconjunto caminho[], int x, int y){
     int raizX = buscar(caminho, x);
     int raizY = buscar(caminho, y);
 
