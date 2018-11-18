@@ -41,6 +41,9 @@ int main(){
     for (a = 0; a < K; a++) {
         scanf("%i %i %i", &N, &M, &Q);
         Subconjunto Paredes[2*(N^2-N)-1]; // Todas as paredes possíveis
+        for (b = 0; b < 2*(N^2-N)-1 -1 ; b++){
+            unir(Paredes[b], b, b+1); //Unir todas as paredes possíveis
+        }
         for (b = 0; b < M; b++){
             scanf("%i", &W[M]);
         }
