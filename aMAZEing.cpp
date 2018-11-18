@@ -1,23 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Aresta {
-    int origem, destino;
-};
-
-struct Grafo {
-    int numVert, numArest;
-    struct Aresta* aresta;
-};
-
 struct Subconjunto {
-    int pai, rank;
+    int pai, rank, valor;
 };
 
 // Funcao para encontrar um elemento i (usando tecnica de compressao)
 int buscar(int buscado){
     if (buscado.pai != buscado){
-        buscado.pai = buscar (buscado.pai);
+        buscado.pai = buscar(buscado.pai);
     }
     return buscado.pai;
 }
