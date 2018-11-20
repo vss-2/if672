@@ -14,7 +14,7 @@ int buscar(Subconjunto caminho[], int procurado){
     if (caminho[procurado].pai != procurado){
         caminho[procurado].pai = buscar(caminho, caminho[procurado].pai);
     }
-    return caminho->pai;
+    return caminho[procurado].pai;
 }
 
 // Funcao que une dois conjuntos de X e Y
