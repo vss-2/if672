@@ -30,7 +30,7 @@ void unir(Subconjunto caminho[], int x, int y){
         caminho[raizY].pai = raizX;
     } else {
         // Se o rank for igual, entao faca uma ser raiz e incremente +1 a outra
-        caminho[y].pai = raizX;
+        caminho[raizY].pai = raizX;
         caminho[raizX].rank++;
     }
 }
@@ -48,7 +48,6 @@ int main(){
         // N Tamanho NxN do labirinto
         // M Quantidade de paredes removidas
         // Q Quantidade de pares testados
-        int Gama = (2*(N-1)) + 1;
         Subconjunto caminho[N*N];
         for (sobrescrever = 0; sobrescrever < N*N; sobrescrever++){
             caminho[sobrescrever].pai = sobrescrever;
@@ -57,17 +56,12 @@ int main(){
         for (b = 0; b < M; b++){
             // Recebo paredes a serem removidas, tenho que unir o que elas separavam
             scanf("%i", &W); contador = 1; valor1 = 0; valor2 = 0;
-            if (W % Gama > N - 2){ // Se der maior é pq é uma célula horizontal --W--
-                for (celulahorizontal = W % Gama; celulahorizontal == W; celulahorizontal += N){
-                    contador++;
-                }
-                valor1 = N*contador; valor2 = valor1 + N;
+            if ( W%(N*2 - 1) < (N-1) ) {
+                valor1 = N*(W/(N*2 - 1)) + W%(N*2 - 1);
+                valor2 = valor1 + 1;
             } else {
-                // O valor é uma célula vertical
-                for (celulavertical = W % Gama; celulavertical != W; celulavertical += Gama){
-                    contador++;
-                }
-                valor1 = W - ((contador - 1) *(N - 1)); valor2 = valor1 + 1;
+                valor1 = (N*(W/(N*2 - 1))) + W%(N*2 - 1)+1;
+                valor2 = valor1 - N;
             }
             unir(caminho, valor1, valor2);
             //cout << "Tenho que unir: " << valor1 << " " << valor2 << endl;
