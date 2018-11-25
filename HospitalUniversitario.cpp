@@ -79,6 +79,135 @@ struct Heap {
     }
 };
 
+int esq2, dir2, meio2, maior, contador;
+
+
+// -------------------- Fila de Prioridades --------------------------//
+
+struct FilaPrioridades {  // É a famosa MAX HEAP
+    // Vetor para armazenar elementos
+    int* fp;
+    int tamanho_fp;
+    int tamanho;
+
+    FilaPrioridades(int N){
+        tamanho = N;
+        fp = new int[tamanho];
+        tamanho_fp = 0;
+    }
+
+    void dobrarTamanho(){
+        int* copiaAuxiliar = fp;
+        tamanho = tamanho * 2;
+        fp = new int[tamanho];
+        for (contador = 0; contador < tamanho; contador++){
+            fp[contador] = copiaAuxiliar[contador];
+        }
+    }
+ 
+    // retorna o pai de A[i]
+    // Não se chama isso se i for a raiz, talquei?
+    int retornaPai(int i) { 
+        return (i - 1) / 2; 
+    }
+ 
+    // retorna o filho a esquerda de A[i]    
+    int retornaEsq(int i) { 
+        return (2 * i + 1); 
+    }
+ 
+    int retornaDir(int i) { 
+        return (2 * i + 2); 
+    }
+ 
+    void troca(int a, int b){
+        int c = a;
+        a = b;
+        b = c;
+    }
+
+    // Algoritmo Heapify-down recursivo
+    // usamos o nó i e pegamos os seus filhos imediatos
+    // violamos a propriedade da heap, devemos arrumá-la
+    void heapify_down(int i){
+        // get left and right child of node at index i
+        int esq2 = retornaEsq(i);
+        int dir2 = retornaDir(i);
+ 
+        maior = i;
+ 
+        // compare A[i] with its left and right child
+        // and find largest value
+        if (esq2 < tamanho() && fp[esq2] > fp[i])
+            maior = esq2;
+ 
+        if (dir2 < fp.tamanho() && fp[dir2] > fp[maior])
+            maior = dir2;
+ 
+        // swap with child having greater value and 
+        // call heapify-down on the child
+        if (maior != i) {
+            troca(fp[i], fp[maior]);
+            heapify_down(maior);
+        }
+    }
+ 
+    // Recursive Heapify-up algorithm
+    void heapify_up(int i){
+        // check if node at index i and its parent violates 
+        // the heap property
+        if (i && fp[retornaPai(i)] < fp[i]) 
+        {
+            // swap the two if heap property is violated
+            troca(fp[i], fp[retornaPai(i)]);
+            
+            // call Heapify-up on the parent
+            heapify_up(retornaPai(i));
+        }
+    }
+
+    // return size of the heap
+    int tamanho(){
+        return fp.tamanho_fp;
+    }
+ 
+    // function to check if heap is empty or not
+    bool estaVazio(){
+        return tamanho() == 0;
+    }
+    
+    // insert key into the heap
+    void inserir(int key){
+        // Insira o novo elemento ao fim do array
+        if (tamanho == tamanho_fp){
+            dobrarTamanho();
+        }
+        
+        // Pegue o índice do elemento e chame heapify bubble up
+        int index = tamanho() - 1;
+        heapify_up(index);
+    }
+ 
+    // function to remove element with highest priority (present at root)
+    void pop(){
+        if (tamanho() != 0){
+            fp[0] = fp.back();
+            fp.pop_back();
+            heapify_down(0);
+        }
+    }
+ 
+    // function to return element with highest priority (present at root)
+    int top(){
+        if (tamanho() != 0){
+            return fp[0];    // or return A[0];
+        }
+    }
+};
+
+// -------------------- Fila de Prioridades --------------------------//
+
+
 String opcao;
 int S, I, U, A;
 
