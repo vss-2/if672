@@ -5,6 +5,7 @@ using namespace std;
 
 String opcao;
 int S, I, U, A;   // Inputs necessários para questão
+int esq2, dir2, meio2, maior, contador;
 
 int temp, bubblerUpper, esq, dir, meio, remover;  // Valores que uso na heap, 
                                                   // criados aqui pra não comprometer tempo de processamento
@@ -13,6 +14,42 @@ struct Heap {
     int* heap;
     int tamanho;
     int tamanho_heap;
+
+    int retornaPai(int node){
+        if (node == 0){
+            return 0;
+        } else {
+            return (i - 1) / 2;
+        }
+    }
+
+    int retornaEsq(int node){
+        return (2 * node + 1);
+    }
+
+    int retornaDir(int node){
+        return (2 * node + 2);
+    }
+
+    // Usado na MaxHeap
+    void heapifyDown(int node){
+        int esq = retornaEsq(node);
+        int dir = retornaDir(node);
+        int maior = node;
+
+        if (esq < tamanho_heap && heap[esq] > heap[node]){
+            maior = esq;
+        }
+        if (dir < tamanho_heap && heap[dir] > heap[maior]){
+            maior = dir;
+        }
+        if (maior != node){
+            trocarValores(node, maior);
+            heapifyDown(maior);
+        }
+    }
+
+    void 
 
     Heap(int inputTamanho){         // Construtor padrão
         tamanho = inputTamanho;
@@ -79,88 +116,6 @@ struct Heap {
     }
 };
 
-int esq2, dir2, meio2, maior, contador;
-
-
-// -------------------- Fila de Prioridades --------------------------//
-
-int temp, bubblerUpper, esq, dir, meio, remover;
-
-struct FilaPrioridades {
-    int* FP;
-    int tamanho;
-    int tamanho_FP;
-
-    FilaPrioridades(int inputTamanho){         // Construtor padrão
-        tamanho = inputTamanho;
-        FP = new int[tamanho];
-        tamanho_FP = 0;
-    }
-
-    void dobrarEspacoHeap(){        // Duplica o espaço, caso heap fique cheia
-        int* auxiliar = FP;
-        tamanho = tamanho * 2;
-        FP = new int[tamanho];
-        for (temp = 0; temp < tamanho; temp++){
-            FP[temp] = auxiliar[temp];
-        }
-    }
-
-    void trocarValores(int* valor1, int* valor2){   // Troca valores inseridos
-        int trocatemp = *valor1;
-        *valor1 = *valor2;
-        *valor2 = trocatemp;
-    }
-
-    void bubble_Up(){                   // Faz valores "subirem"
-        bubblerUpper = tamanho_FP - 1;
-        while (bubblerUpper > 0 && FP[bubblerUpper] <= FP[(bubblerUpper-1)/2]){
-            trocarValores(&FP[bubblerUpper], &FP[(bubblerUpper-1)/2]);
-        }
-    }
-
-    void inserirHeap(int inserido){     // Insere valores na heap
-        if (tamanho_FP){
-            dobrarEspacoHeap();
-        }
-        FP[tamanho_FP] = inserido;
-        tamanho_FP++;
-        bubble_Up();
-    }
-
-    void heapify(int arrepiado){        // Arruma a heap a partir de um dado valor
-        meio = arrepiado;
-        esq = 2*arrepiado + 1;
-        dir = 2*arrepiado + 2;
-
-        if (esq < tamanho_FP && FP[esq] <= FP[meio]){
-            meio = esq;
-        }
-
-        if (dir < tamanho_FP && FP[dir] <= FP[meio]){
-            meio = dir;
-        }
-
-        if (meio != arrepiado){
-            trocarValores(&FP[arrepiado], &FP[tamanho_FP - 1]);
-            heapify(meio);
-        }
-    }
-
-    int removerdaHeap(){ // Retorna o valor excluido
-        remover = FP[0];
-        trocarValores(&FP[0], &FP[tamanho_FP - 1]);
-        tamanho_FP--;
-        heapify(0);
-        return remover;
-    }
-};
-
-// -------------------- Fila de Prioridades --------------------------//
-
-
-String opcao;
-int S, I, U, A;
 
 int main(){
     scanf("%i", &S);
