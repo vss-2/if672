@@ -19,7 +19,7 @@ struct Heap {
         if (node == 0){
             return 0;
         } else {
-            return (i - 1) / 2;
+            return (node - 1) / 2;
         }
     }
 
@@ -44,12 +44,17 @@ struct Heap {
             maior = dir;
         }
         if (maior != node){
-            trocarValores(node, maior);
+            swap(node, maior);
             heapifyDown(maior);
         }
     }
 
-    void 
+    void heapifyUp(int node){
+        if (node > 0 && retornaPai(node) < heap[node]){
+            swap(heap[node], heap[(node - 1)/2]);
+            heapifyUp(heap[(node - 1)/2]);
+        }
+    }
 
     Heap(int inputTamanho){         // Construtor padrão
         tamanho = inputTamanho;
@@ -108,16 +113,33 @@ struct Heap {
     }
 
     int removerdaHeap(){ // Retorna o valor excluido
-        remover = heap[0];
-        trocarValores(&heap[0], &heap[tamanho_heap -1]);
-        tamanho_heap--;
-        heapify(0);
-        return remover;
+        if (!estaVazia){
+            remover = heap[0];
+            trocarValores(&heap[0], &heap[tamanho_heap -1]);
+            tamanho_heap--;
+            heapify(0);
+            return remover;
+        } else {
+            printf("-1 -1 -1");
+            return -1;
+        }
+    }
+
+    bool estaVazia(){
+        if(tamanho_heap == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 
 
 int main(){
+    Heap *estudantes = new Heap(1000);
+    // Os estudantes tem o menor risco
+    Heap *normal = new Heap(1000);
+    // Aqui são atendidos os de maior prioridade
     scanf("%i", &S);
     while(S--){
         scanf("%s", &opcao);
