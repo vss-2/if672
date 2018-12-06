@@ -1,4 +1,4 @@
-#include <iostream> 
+#include <iostream>
 #include <stdio.h>
 
 using namespace std;
@@ -14,7 +14,7 @@ int main(){
 
     // [Numero de itens][peso]
     int tabelaKnapsack[N][K] = { 0 };
-    int itens[N]; int printresposta[N] = { 0 };
+    Item itens[N]; int printresposta[N] = { 0 };
 
     while (Ncount < N){
         scanf("%i %i", &itens[Ncount].Preco, &itens[Ncount].Peso);
@@ -54,7 +54,7 @@ int main(){
         if(resposta == tabelaKnapsack[zerador - 1][K]){
             continue;
         } else {
-            printresposta[zerador - 1]; // Array de pesos 
+            printresposta[zerador - 1]; // Array de pesos
             quantidadeUsada++;
         }
     }
@@ -63,12 +63,12 @@ int main(){
 
     zerador = 0;
     while(zerador < quantidadeUsada){
-        if (zerador+1 < quantidadeUsada)
+        if (zerador+1 < quantidadeUsada){
             printf("%i ", tabelaKnapsack[zerador]);
-            zerador++;
-        else 
+        } else {
             printf("%i\n", tabelaKnapsack[zerador]);
+        }
+        zerador++;
     }
-
     return 0;
 }
