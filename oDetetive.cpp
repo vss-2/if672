@@ -39,13 +39,15 @@ int main(){
     // Zeradas as primeiras linhas e colunas da tabela
     */
     for (i = 1; i < N; i++){
-        for (j = 1; j < W; j++){
+        for (j = 1; j < K; j++){
                 /*tabelaKnapsack[W][i] = tabelaKnapsack[W][i-1];
                 if(itens[i].Peso >= j){
                    tabelaKnapsack[i][j] = max(tabelaKnapsack[i][j], tabelaKnapsack[i-1][j - itens[i].Peso] + itens[i].Preco);
                 */
+                //cout << "peso de itens: " << itens[i-1].Peso << " peso j: " << j << endl;
                 if (itens[i-1].Peso <= j){
                     tabelaKnapsack[i][j] = max(tabelaKnapsack[i-1][j], tabelaKnapsack[i-1][j - itens[i-1].Peso] + itens[i-1].Preco);
+                    //cout << "inseri " << tabelaKnapsack[i][j] << " " << endl;
                 }
             }
         }
