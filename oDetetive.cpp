@@ -1,15 +1,17 @@
 #include <iostream>
 #include <stdio.h>
+#include <algorithm>
 
 using namespace std;
 
-int N, K, Ncount, P, W, zerador, i, j, quantidadeUsada;
+int K, Ncount, P, W, zerador, i, j, quantidadeUsada = 0;
 
 struct Item {
     int Preco, Peso;
 };
 
 int main(){
+    int N = 0;
     scanf("%i %i", &N, &K);
 
     // [Numero de itens][peso]
@@ -38,19 +40,23 @@ int main(){
     */
     for (i = 1; i < N; i++){
         for (j = 1; j < W; j++){
-            tabelaKnapsack[W][i] = tabelaKnapsack[W][i-1];
-            if(itens[i].Peso <= j){
-                tabelaKnapsack[i][j] = max(tabelaKnapsack[i][j], tabelaKnapsack[i-1][j - itens[i].Peso] + itens[i].Preco);
+                /*tabelaKnapsack[W][i] = tabelaKnapsack[W][i-1];
+                if(itens[i].Peso >= j){
+                   tabelaKnapsack[i][j] = max(tabelaKnapsack[i][j], tabelaKnapsack[i-1][j - itens[i].Peso] + itens[i].Preco);
+                */
+                if (itens[i-1].Peso <= j){
+                    tabelaKnapsack[i][j] = max(tabelaKnapsack[i-1][j], tabelaKnapsack[i-1][j - itens[i-1].Peso] + itens[i-1].Preco);
+                }
             }
         }
-    }
-    printf("%i", tabelaKnapsack[N-1][K-1]);
 
-    int resposta = tabelaKnapsack[N-1][K-1];
+    printf("%i", tabelaKnapsack[N-2][K-2]);
+
+    int resposta = tabelaKnapsack[N-2][K-2];
 
     quantidadeUsada = 0;
 
-    for(zerador = N; zerador < 0 && resposta > 0; zerador++){
+    for(zerador = N; zerador > 0 && resposta > 0; zerador--){
         if(resposta == tabelaKnapsack[zerador - 1][K]){
             continue;
         } else {
@@ -58,8 +64,7 @@ int main(){
             quantidadeUsada++;
         }
     }
-
-    printresposta.sort();
+    // sort(printresposta[0], printresposta[N-1]);
 
     zerador = 0;
     while(zerador < quantidadeUsada){
