@@ -1,82 +1,15 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include <queue>
+#include <climits>
 
-int INF = 999999;
+#define INF INT_MAX;
 
 using namespace std;
 
 double prioridade = 0;
 int N, M, mcount, X, Y, B, C, S, T;
 double pai[20000];
-
-typedef pair<double,double> ii;
-typedef vector<ii> vii;
-priority_queue <ii,vii,greater<ii>> tovisit;
-typedef vector<double> vi;
-double desgraca[20000];
-int minD[20000];
-vii adj[20000];
-int t, v, e, a, b, w, infi;
-
-//-------------- Ze Dijkstra ----------------//
-
-
-bool dijkstra(int S, int T){
-    bool way =false;
-    double edgeweight,weightTillNow;
-    int current, child;
-    ii aux;
-    tovisit.push(make_pair(minD[S],S));
-
-    while(!tovisit.empty()){
-        aux=tovisit.top(); tovisit.pop();
-        current=aux.second;
-
-            for(auto aux : adj[current]){
-                edgeweight=aux.first;
-                child=aux.second;
-                if(child==T)
-                    way=true;
-                if(minD[current]+edgeweight<minD[child]){
-                    desgraca[child] = current;
-                    cout << "Opa achei o resultado hein colega: " << current << endl;
-                    minD[child]=minD[current]+edgeweight;
-                    tovisit.push(make_pair(minD[child],child));
-                }
-            }
-    }
-    cout << minD[T] << endl;
-    return way;
-}
-//-------------- Ze Dijkstra ----------------//
-
-struct no{
-  int origem, destino;
-  double peso;
-};
-
-struct heap{
-  no ligacoes[5000];
-};
-
-no *montarNo(no *nov, int ori, int dest, double pes){
-  nov->origem = ori;
-  nov->destino = dest;
-  nov->peso = pes;
-  return nov;
-}
-
-heap *montarHeap(heap *atual, no botar, int posicao){
-  atual->ligacoes[posicao] = botar;
-  return atual;
-}
-
-heap *printarNo(heap *atual, int posicao){
-  cout << atual->ligacoes[posicao].origem << " " << atual->ligacoes[posicao].destino << "       " << atual->ligacoes[posicao].peso << " \n";
-  return atual;
-}
 
 int main() {
     /*
