@@ -7,10 +7,6 @@ using namespace std;
 
 int Ncount, input1, input2, i, j, quantidadeUsada, zerador, contador, printer;
 
-struct precoEordem{
-  int Preco, Ordem;
-};
-
 int main(){
   int N, K;
   scanf("%i %i", &N, &K);
@@ -70,17 +66,6 @@ int main(){
   }
 
     cout << respostaOrdenada << endl;
-
-  //sort(respostaOrdenada, respostaOrdenada + contador);
-
-  /*while(printer < contador){
-    if(printer + 1 < contador){
-      printf("%i ", respostaOrdenada[printer]);
-    } else {
-      printf("%i\n", respostaOrdenada[printer]);
-    }
-    printer++;
-  }*/
 
   return 0;
 }
