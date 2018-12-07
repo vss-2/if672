@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int Ncount, input1, input2, i, j, quantidadeUsada, zerador, contador;
+int Ncount, input1, input2, i, j, quantidadeUsada, zerador, contador, printer;
 
 struct precoEordem{
   int Preco, Ordem;
@@ -20,18 +20,21 @@ int main(){
   int printResposta;                // No maximo, vai caber tudo
 
   // Vetor contendo os proximos pesos e precos
-  vector<pair<int,int>> itens;
+  vector<pair<int, pair<int,int> > > itens; 
+  // Tive que criar essa aberração após ler errado a entrada, o segundo pair guarda a Preço e ordem de entrada
 
   while(Ncount < N){  // Recebendo as entradas
     scanf("%i %i", &input1, &input2);  
     // Essa desgraça de push e make me confundiu todo, vai assim mesmo
-    itens.push_back(make_pair(input2, input1));
+    // Peso e preco, eu confundi a entrada, inverti aqui
+
+    itens.push_back(make_pair(input2, make_pair(input1,Ncount)));
     Ncount++;
   }
 
   // Organizando array, usando como base o peso, 
   // o objetivo é colocar na tabela corretamente
-  //sort(itens.begin(), itens.end()); Não é necessário, ignore
+  //sort(itens.begin(), itens.end());
 
       for (i = 0; i <= N; i++){     // Nao começa pelo zero pois primeira linha e coluna é zerada
         for (j = 0; j <= K; j++){   // Tô ganhando N+K tempo, talkei?
@@ -42,7 +45,7 @@ int main(){
             if (i == 0 || j == 0){
               tabelaKnapsack[i][j] = 0;
             } else if (itens[i-1].first <= j){
-                tabelaKnapsack[i][j] = max(itens[i-1].second + tabelaKnapsack[i-1][j - itens[i-1].first], tabelaKnapsack[i-1][j]);
+                tabelaKnapsack[i][j] = max(itens[i-1].second.first + tabelaKnapsack[i-1][j - itens[i-1].first], tabelaKnapsack[i-1][j]);
                 //cout << "inseri " << tabelaKnapsack[i][j] << " " << endl;
             } else {
                 tabelaKnapsack[i][j] = tabelaKnapsack[i-1][j];
@@ -56,14 +59,29 @@ int main(){
 
   contador = 0;
 
+  int respostaOrdenada[N];
+
   for (zerador = N; zerador > 0 && printResposta > 0; zerador--){
     if (printResposta == tabelaKnapsack[zerador-1][K]){
       continue;
     } else {
-      printf("%i ", itens[zerador-1].first);
-      printResposta = printResposta - itens[zerador - 1].second;
+      //printf("%i ", itens[zerador-1].second.second);
+      respostaOrdenada[contador] = itens[zerador-1].second.second;
+      printResposta = printResposta - itens[zerador - 1].second.first;
       K = K - itens[zerador - 1].first;
+      contador++;
     }
+  }
+
+  sort(respostaOrdenada, respostaOrdenada + contador);
+
+  while(printer < contador){
+    if(printer + 1 < contador){
+      printf("%i ", respostaOrdenada[printer]);
+    } else {
+      printf("%i\n", respostaOrdenada[printer]);
+    }
+    printer++;
   }
 
   return 0;
