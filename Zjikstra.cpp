@@ -11,6 +11,11 @@ double prioridade = 0;
 int N, M, mcount, X, Y, B, C, S, T;
 double pai[20000];
 
+struct listAdjacencia{
+    pair<int, int> ES;
+    struct listAdjacencia *proximo;
+};
+
 int main() {
     /*
         ------------------- Proposito do Main --------------------
@@ -23,16 +28,19 @@ int main() {
     */
 
 
-    scanf("%lf",&prioridade);
-    scanf("%d",&N);
-    scanf("%d",&M);
+    scanf("%lf", &prioridade);
+    scanf("%d", &N);
+    scanf("%d", &M);
 
     // Pega prioridades, e entrada N e M
+    // N = quantidade de nos na rede
+    // M = quantidade de ligações entre nos
+    
+    listAdjacencia ladj[N] = new listAdjacencia();
 
-    for(int j=0;j<N;j++) {
+    /*for(int j=0;j<N;j++) {
         adj[j].clear();
-    }
-
+    }*/
 
     int Xs[M];
     int Ys[M];
@@ -46,8 +54,8 @@ int main() {
         scanf("%i", &Xs[mcount]); // Origem
         scanf("%i", &Ys[mcount]); // Destino
 
-        ladj[0][M] = 1;  // Marco na lista de adjacencia
-        ladj[1][M] = 1;  // Tenho que marcar (X,Y) e (Y,X)
+        ladj[Xs[mcount]] = make_pair(Xs[mcount], Ys[mcount]);  // Marco na lista de adjacencia
+        ladj[Ys[mcount]] = make_pair(Ys[mcount], Xs[mcount]);  // Tenho que marcar (X,Y) e (Y,X)
 
         scanf("%i", &B); // Velocidade
         scanf("%i", &C); // Custo
