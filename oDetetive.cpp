@@ -1,81 +1,70 @@
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
-int K, Ncount, P, W, zerador, i, j, quantidadeUsada = 0;
+int Ncount, input1, input2, i, j, quantidadeUsada, zerador, contador;
 
-struct Item {
-    int Preco, Peso;
+struct precoEordem{
+  int Preco, Ordem;
 };
 
 int main(){
-    int N = 0;
-    scanf("%i %i", &N, &K);
+  int N, K;
+  scanf("%i %i", &N, &K);
+  // Numero de itens e peso da sacola
 
-    // [Numero de itens][peso]
-    int tabelaKnapsack[N][K] = { 0 };
-    Item itens[N]; int printresposta[N] = { 0 };
+  int tabelaKnapsack[N + 1][K + 1]; // Tabela N x K, tamanho expandido em 1 pra resposta
+  int printResposta;                // No maximo, vai caber tudo
 
-    while (Ncount < N){
-        scanf("%i %i", &itens[Ncount].Preco, &itens[Ncount].Peso);
-        Ncount++;
-    }
+  // Vetor contendo os proximos pesos e precos
+  vector<pair<int,int>> itens;
 
-    zerador = 0;
-    /*
-    while(zerador < N){
-        tabelaKnapsack[zerador][K] = 0;
-        zerador++;
-    }
+  while(Ncount < N){  // Recebendo as entradas
+    scanf("%i %i", &input1, &input2);  
+    // Essa desgraça de push e make me confundiu todo, vai assim mesmo
+    itens.push_back(make_pair(input2, input1));
+    Ncount++;
+  }
 
-    zerador = 0;
-    while(zerador < K){
-        tabelaKnapsack[N][zerador] = 0;
-        zerador++;
-    }
+  // Organizando array, usando como base o peso, 
+  // o objetivo é colocar na tabela corretamente
+  //sort(itens.begin(), itens.end()); Não é necessário, ignore
 
-    // Zeradas as primeiras linhas e colunas da tabela
-    */
-    for (i = 1; i < N; i++){
-        for (j = 1; j < K; j++){
-                /*tabelaKnapsack[W][i] = tabelaKnapsack[W][i-1];
-                if(itens[i].Peso >= j){
-                   tabelaKnapsack[i][j] = max(tabelaKnapsack[i][j], tabelaKnapsack[i-1][j - itens[i].Peso] + itens[i].Preco);
-                */
-                //cout << "peso de itens: " << itens[i-1].Peso << " peso j: " << j << endl;
-                if (itens[i-1].Peso <= j){
-                    tabelaKnapsack[i][j] = max(tabelaKnapsack[i-1][j], tabelaKnapsack[i-1][j - itens[i-1].Peso] + itens[i-1].Preco);
-                    //cout << "inseri " << tabelaKnapsack[i][j] << " " << endl;
-                }
+      for (i = 0; i <= N; i++){     // Nao começa pelo zero pois primeira linha e coluna é zerada
+        for (j = 0; j <= K; j++){   // Tô ganhando N+K tempo, talkei?
+            
+            //cout << "peso de itens: " << itens[i-1].first << " peso j: " << j << endl;
+
+            // Pegando os pesos e itens olhando se na linha anterior estão os mais valiosos
+            if (i == 0 || j == 0){
+              tabelaKnapsack[i][j] = 0;
+            } else if (itens[i-1].first <= j){
+                tabelaKnapsack[i][j] = max(itens[i-1].second + tabelaKnapsack[i-1][j - itens[i-1].first], tabelaKnapsack[i-1][j]);
+                //cout << "inseri " << tabelaKnapsack[i][j] << " " << endl;
+            } else {
+                tabelaKnapsack[i][j] = tabelaKnapsack[i-1][j];
             }
         }
-
-    printf("%i", tabelaKnapsack[N-2][K-2]);
-
-    int resposta = tabelaKnapsack[N-2][K-2];
-
-    quantidadeUsada = 0;
-
-    for(zerador = N; zerador > 0 && resposta > 0; zerador--){
-        if(resposta == tabelaKnapsack[zerador - 1][K]){
-            continue;
-        } else {
-            printresposta[zerador - 1]; // Array de pesos
-            quantidadeUsada++;
-        }
     }
-    // sort(printresposta[0], printresposta[N-1]);
 
-    zerador = 0;
-    while(zerador < quantidadeUsada){
-        if (zerador+1 < quantidadeUsada){
-            printf("%i ", tabelaKnapsack[zerador]);
-        } else {
-            printf("%i\n", tabelaKnapsack[zerador]);
-        }
-        zerador++;
+  printf("%i\n", tabelaKnapsack[N][K]); // Resposta do problema
+
+  printResposta = tabelaKnapsack[N][K];
+
+  contador = 0;
+
+  for (zerador = N; zerador > 0 && printResposta > 0; zerador--){
+    if (printResposta == tabelaKnapsack[zerador-1][K]){
+      continue;
+    } else {
+      printf("%i ", itens[zerador-1].first);
+      printResposta = printResposta - itens[zerador - 1].second;
+      K = K - itens[zerador - 1].first;
     }
-    return 0;
+  }
+
+  return 0;
 }
