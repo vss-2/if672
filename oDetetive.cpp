@@ -7,13 +7,22 @@ using namespace std;
 
 int Ncount, input1, input2, i, j, quantidadeUsada, zerador, contador, printer;
 
+
+
 int main(){
   int N, K;
   scanf("%i %i", &N, &K);
   // Numero de itens e peso da sacola
 
-  int tabelaKnapsack[N + 1][K + 1]; // Tabela N x K, tamanho expandido em 1 pra resposta
-  int printResposta;                // No maximo, vai caber tudo
+  int **tabelaKnapsack;
+
+  tabelaKnapsack = new int*[N + 1]; // Tabela N x K, tamanho expandido em 1 pra resposta
+  int printResposta;
+
+  for(int desgraca = 0; desgraca <= N; desgraca++){
+      tabelaKnapsack[desgraca] = new int[K+1];
+  }
+                // No maximo, vai caber tudo
 
   // Vetor contendo os proximos pesos e precos
   vector<pair<int, pair<int,int> > > itens; 
@@ -53,19 +62,30 @@ int main(){
 
   contador = 0;
 
-  string respostaOrdenada = "";
+  int respostaOrdenada[N];
 
   for (zerador = N; zerador > 0 && printResposta > 0; zerador--){
     if (printResposta != tabelaKnapsack[zerador-1][K]){
       //printf("%i ", itens[zerador-1].second.second);
-      respostaOrdenada = to_string(itens[zerador-1].second.second) + " " + respostaOrdenada;
+      respostaOrdenada[contador] = itens[zerador-1].second.second;
       printResposta = printResposta - itens[zerador - 1].second.first;
       K = K - itens[zerador - 1].first;
       contador++;
     }
   }
 
-    cout << respostaOrdenada << endl;
+    //cout << respostaOrdenada;
+    //printf("\n");
+  sort(respostaOrdenada, respostaOrdenada + contador);
+
+  while(printer < contador){
+    if(printer + 1 < contador){
+      printf("%i ", respostaOrdenada[printer]);
+    } else {
+      printf("%i\n", respostaOrdenada[printer]);
+    }
+    printer++;
+  }
 
   return 0;
 }
