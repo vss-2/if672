@@ -36,15 +36,13 @@ int main(){
   // o objetivo é colocar na tabela corretamente
   //sort(itens.begin(), itens.end());
 
-      for (i = 0; i <= N; i++){     // Nao começa pelo zero pois primeira linha e coluna é zerada
-        for (j = 0; j <= K; j++){   // Tô ganhando N+K tempo, talkei?
+      for (i = 1; i <= N; i++){     // Nao começa pelo zero pois primeira linha e coluna é zerada
+        for (j = 1; j <= K; j++){   // Tô ganhando N+K tempo, talkei?
             
             //cout << "peso de itens: " << itens[i-1].first << " peso j: " << j << endl;
 
             // Pegando os pesos e itens olhando se na linha anterior estão os mais valiosos
-            if (i == 0 || j == 0){
-              tabelaKnapsack[i][j] = 0;
-            } else if (itens[i-1].first <= j){
+            if (itens[i-1].first <= j){
                 tabelaKnapsack[i][j] = max(itens[i-1].second.first + tabelaKnapsack[i-1][j - itens[i-1].first], tabelaKnapsack[i-1][j]);
                 //cout << "inseri " << tabelaKnapsack[i][j] << " " << endl;
             } else {
@@ -59,30 +57,30 @@ int main(){
 
   contador = 0;
 
-  int respostaOrdenada[N];
+  string respostaOrdenada = "";
 
   for (zerador = N; zerador > 0 && printResposta > 0; zerador--){
-    if (printResposta == tabelaKnapsack[zerador-1][K]){
-      continue;
-    } else {
+    if (printResposta != tabelaKnapsack[zerador-1][K]){
       //printf("%i ", itens[zerador-1].second.second);
-      respostaOrdenada[contador] = itens[zerador-1].second.second;
+      respostaOrdenada = to_string(itens[zerador-1].second.second) + " " + respostaOrdenada;
       printResposta = printResposta - itens[zerador - 1].second.first;
       K = K - itens[zerador - 1].first;
       contador++;
     }
   }
 
-  sort(respostaOrdenada, respostaOrdenada + contador);
+    cout << respostaOrdenada << endl;
 
-  while(printer < contador){
+  //sort(respostaOrdenada, respostaOrdenada + contador);
+
+  /*while(printer < contador){
     if(printer + 1 < contador){
       printf("%i ", respostaOrdenada[printer]);
     } else {
       printf("%i\n", respostaOrdenada[printer]);
     }
     printer++;
-  }
+  }*/
 
   return 0;
 }
