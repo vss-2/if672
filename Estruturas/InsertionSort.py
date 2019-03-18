@@ -6,7 +6,7 @@ def insertionSort(entrada):
 	for i in range(1, len(entrada)):
 		auxiliar = entrada[i]
 		j = i
-		while((j > 0) & (entrada[j-1] > auxiliar)):
+		while((j > 0) and (entrada[j-1] > auxiliar)):
 			entrada[j] = entrada[j-1]
 			j = j-1
 		entrada[j] = auxiliar
