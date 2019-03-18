@@ -21,6 +21,6 @@ busca = 7
 resposta = buscaBinaria (entrada, 0, len(entrada)-1, busca)
 
 if resposta != -1:
-    print ("O valor buscado está no índice: % d" % result)
+    print ("O valor buscado está no índice: % d" % resposta)
 else:
     print ("O valor buscado não está no array!")
