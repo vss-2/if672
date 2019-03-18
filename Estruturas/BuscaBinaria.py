@@ -1,6 +1,6 @@
 # Busca binária implementada de forma recursiva
 # Entrada: array (espera-se desordenado)
-# Saída: array (ordenado)
+# Saída: índice do valor (se estiver presente no array)
 
 def buscaBinaria (entrada, esq, dir, busca):
     if dir >= esq:
