@@ -18,3 +18,4 @@ print ("O array ordenado: ")
 
 for x in range (0, len(entrada)):
 	print("%d " %entrada[x], end = "")
+	
