@@ -12,9 +12,7 @@ def selectionSort(entrada, tamanho):
 			j = j+1
 		if(entrada[i] != entrada[menor]):
 			# Swap
-			auxiliar = entrada[i]
-			entrada[i] = entrada[menor]
-			entrada[menor] = auxiliar
+			entrada[i], entrada[menor] = entrada[menor], entrada[i]
 	i = i+1
 
 entrada = [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
