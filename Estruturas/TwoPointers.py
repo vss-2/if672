@@ -99,3 +99,46 @@ def moveZeroes(nums):
             nums[p1], nums[p2] = nums[p2], nums[p1]
         if nums[p1] != 0:
             p1 += 1
+
+
+# Fonte: https://leetcode.com/problems/remove-nth-node-from-end-of-list
+# Entrada:
+# [1,2,3,4,5]
+# 2
+# Saída:
+# [1,2,3,5]
+# Resumo do enunciado:
+# Dado uma lista encadeada, delete n-ésimo último item
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        p1 = head
+        p2 = head
+        
+        # A sacada de usar o two pointers é porque um vai até o 
+        # fim mais rápido e sinaliza ao outro para parar e remover o elemento
+
+        # Avança 2o ponteiro para frente,
+        # garantido que tá nos limites
+        for move in range(n):
+            p2 = p2.next
+        
+        # Caso específico de p2 ser o último
+        if p2.next == None:
+            return head.next
+        
+        # Caso padrão te que percorrer todos
+        while p2.next != None:
+            p1 = p1.next
+            p2 = p2.next
+        
+        # Dado que o p2 segue avançando a uma
+        # distância "n", você só precisa deletar
+        # quando o p2 chegar ao fim
+        p1.next = p1.next.next
+        
+        return head
