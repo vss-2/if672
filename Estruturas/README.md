@@ -22,3 +22,12 @@ Consiste numa técnica utilizada em estruturas como array para verificar rapidam
 <br>*
 <br>
 Obs: # é a raiz da árvore e * é o fim de uma palavra
+
+# Janela deslizante
+É uma técnica utilizada quando estamos interessados em identificar cadeias de caracteres ou outros tipos de subconjuntos e suas particularidades: se os elementos estão na mesma ordem, se os elementos são permutações (anagramas), encontrar todos os anagramas, etc. Uma evolução deste método é o Rabin-Karp, onde, além da janela deslizante, é aplicada uma função de hash na janela para evitar a checagem elemento-por-elemento, algo que consome muito tempo.
+
+# Rabin-Karp
+Podemos usar Rabin Karp para descobrir a maior sequência de elementos em ordem. Normalmente, o custo computacional é de O(m-n+1), mas num caso de uma função de hash ruim que potencialize o número de colisões (espúrias), temos O(m*n). Uma forma de melhorar a função de hash é multiplicar cada número da cadeia por 10^n, onde n é a posição na cadeia.
+
+# Soma de 2
+Muitas vezes, as questões pedem para você trabalhar com 2 elementos para verificar se há um terceiro no conjunto, ou realizar operações matemáticas entre eles. Por exemplo: dado um vetor contendo N elementos e um valor K, se você quiser remover os pares que juntos somam K, pode fazer isso salvando todas os ocorrências no vetor e perguntando se a subtração dele - K está no vetor, se sim remover o elemento.
