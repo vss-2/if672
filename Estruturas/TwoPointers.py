@@ -109,36 +109,75 @@ def moveZeroes(nums):
 # [1,2,3,5]
 # Resumo do enunciado:
 # Dado uma lista encadeada, delete n-ésimo último item
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        p1 = head
-        p2 = head
-        
-        # A sacada de usar o two pointers é porque um vai até o 
-        # fim mais rápido e sinaliza ao outro para parar e remover o elemento
+# Definition for singly-linked list. Classe fornecida pela questão
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+def removeNthFromEnd(head: ListNode, n: int) -> ListNode:
+    p1 = head
+    p2 = head
+    
+    # A sacada de usar o two pointers é porque um vai até o 
+    # fim mais rápido e sinaliza ao outro para parar e remover o elemento
 
-        # Avança 2o ponteiro para frente,
-        # garantido que tá nos limites
-        for move in range(n):
-            p2 = p2.next
+    # Avança 2o ponteiro para frente,
+    # garantido que tá nos limites
+    for move in range(n):
+        p2 = p2.next
+    
+    # Caso específico de p2 ser o último
+    if p2.next == None:
+        return head.next
+    
+    # Caso padrão te que percorrer todos
+    while p2.next != None:
+        p1 = p1.next
+        p2 = p2.next
+    
+    # Dado que o p2 segue avançando a uma
+    # distância "n", você só precisa deletar
+    # quando o p2 chegar ao fim
+    p1.next = p1.next.next
+    
+    return head
+
+# Fonte: https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/submissions/
+# Entrada: "abbaca"
+# Saída: "ca"
+# Resumo do enunciado: agrupe e remova os pares de caracteres
+# Follow-up: e se eu quiser remover apenas grupos de k caracteres ocupados?
+# Fonte follow-up: https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
+# Obs: possível fazer essa e o follow-up com pilha
+def removeDuplicates(s: str) -> str:
+    p1, p2 = 0, 0
+    
+    # É uma cópia do input, mas em array/lista, não string
+    tf = list(s)
+
+    for _ in range(0, len(s)):
+        # Avança os ponteiros para o mesmos caractere
+        tf[p1] = tf[p2]
+
+        # Se um ponteiro não for o primeiro caractere
+        # e se o caractere anterior foi o igual ao atual
+        # então significa que o primeiro ponteiro volta 
+        # esses 2 caracteres repetidos ("pula pra trás"). 
+        # Dessa forma você vai estar gravando no começo do array, em espaço O(N),
+        # os caracteres não repetidos, depois é só cortar o vetor ao último caractere alterado do começo
+        if p1 > 0 and tf[p1 - 1] == tf[p1]:
+            p1 -= 2
         
-        # Caso específico de p2 ser o último
-        if p2.next == None:
-            return head.next
-        
-        # Caso padrão te que percorrer todos
-        while p2.next != None:
-            p1 = p1.next
-            p2 = p2.next
-        
-        # Dado que o p2 segue avançando a uma
-        # distância "n", você só precisa deletar
-        # quando o p2 chegar ao fim
-        p1.next = p1.next.next
-        
-        return head
+        # No follow-up, a condicional acima seria:
+        # tf seria um array de contar repetidos
+        # if p1 > 0 and s[p1 - 1] == s[p2]:
+        #   tf[p1 - 1] += 1
+        # else:
+        #   tf[p1 - 1] = 1
+        # if tf[p1] == k:
+        #   p1 -= k
+
+        p1 += 1
+        p2 += 1
+    
+    return ''.join(tf[0:p1])
