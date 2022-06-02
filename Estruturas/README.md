@@ -31,3 +31,15 @@ Podemos usar Rabin Karp para descobrir a maior sequência de elementos em ordem.
 
 # Soma de 2
 Muitas vezes, as questões pedem para você trabalhar com 2 elementos para verificar se há um terceiro no conjunto, ou realizar operações matemáticas entre eles. Por exemplo: dado um vetor contendo N elementos e um valor K, se você quiser remover os pares que juntos somam K, pode fazer isso salvando todas os ocorrências no vetor e perguntando se a subtração dele - K está no vetor, se sim remover o elemento.
+
+# Backtracking
+Backtracking é uma técnica que consiste em explorar uma solução até onde for possível e, quando perceber que não dá mais, voltar atrás para tentar outra solução diferente. Backtracking está inerentemente associado a uma árvore de estado de espaço, por exemplo, no problema das 8 rainhas usa-se o backtracking para avaliar se há conflito entre rainhas, se houve, aplica-se o backtracking até o estágio que não havia conflito. Comumente, o backtracking é implementado de forma recursiva, mas pode ser adaptado, por exemplo para uma método DFS (sendo que o propósito da DFS é percorrer todo, sem paradas até o fim). Para gerar todas as combinações de cadeias abrindo e fechando parênteses, pode-se usar o backtracking (combinacoes_parenteses.py).
+
+# Operadores Bitwise
+Algumas operações podem ser feitas a nível binário (normalmente quando realizar as mesmas utilizando inteiros seria custosa, ou quando o número em si não é completamente importante, mas sim algum dado extraído dele, ver aplicando_bitwise.py), por exemplo: divisão, multiplicação. São operadores bitwise em Python:
+* & = AND
+* ~ = NOT
+* | = OR
+* ^ = XOR
+* y << x = Multiplicação: (y*(2**x))
+* x >> y = Divisão com arredondamento para baixo (floor): (x // (2**y))
